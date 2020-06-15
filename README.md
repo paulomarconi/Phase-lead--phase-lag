@@ -6,6 +6,7 @@ Matlab code:
 - Question1.m
 - Question2.m
 
-University of Sheffield, UK.     
-Course: ACS6101 - Foundations of Control Systems    
-Prof. Daniel Coca  
+Coursework project:
+- University of Sheffield, UK.     
+- Course: ACS6101 - Foundations of Control Systems    
+- Prof. Daniel Coca  
