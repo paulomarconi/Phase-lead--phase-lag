@@ -137,24 +137,24 @@ urlcolor=black %
 The aim of this task is to design a Phase-lead compensator using the Bode analysis in the frequency domain, and evaluate it in Matlab. Although the plant $G(s)$ is a third-order system Eq.\eqref{eq:G}, the design requirements can be approximated in terms of the natural frequency ($\omega_n$) and damping ratio ($\zeta$) of a second-order system.
 
 \begin{align}
-& G(s)=\dfrac{K}{s(s+a)(s+b)} \label{eq:G}\\
-& G(s)=\dfrac{K}{s(s+2.5)(s+27)} \nonumber
+G(s) &= \dfrac{K}{s(s+a)(s+b)} \label{eq:G}\\
+G(s) &= \dfrac{K}{s(s+2.5)(s+27)} \nonumber
 \end{align} 
 
 \subsection{Determine the gain $K$ for a step response overshoot no more than 10\%}
 There are two steps to follow in order to obtain the required gain $K$, the first one uses the second-order performance approximation in the frequency domain, and the second step uses the gain and angle condition.
 
-The relation between the Percentage Overshoot ($P.O.$) in response to a unity step input of a second-order system in the \textbf{time domain}, and the Phase Margin ($PM$) of the Bode analysis in the \textbf{frequency domain}, can be written as follows,
+The relation between the Percentage Overshoot ($PO$) in response to a unity step input of a second-order system in the \textbf{time domain}, and the Phase Margin ($PM$) of the Bode analysis in the \textbf{frequency domain}, can be written as follows,
 \begin{align}
-& P.O. = 100~e^{-\zeta\pi/\sqrt{1-\zeta^2}} \label{PO} \\
-& PM  \approx 100 ~\zeta \label{eq:PM}
+PO &= 100~e^{-\zeta\pi/\sqrt{1-\zeta^2}} \label{PO} \\
+PM &\approx 100 ~\zeta \label{eq:PM}
 \end{align}
-applying the requirement of $P.O.\leq10\%$,
+applying the requirement of $PO\leq10\%$,
 \begin{align}
-& \zeta = \dfrac{ \ln\left(\frac{100}{P.O.}\right) }{\sqrt{\pi^2+\left[ \ln \left(  \frac{100}{P.O.}\right)\right]}}	\label{eq:zeta} \\
-& \zeta = 0.59 \approx 0.60 \nonumber
+\zeta &= \dfrac{ \ln\left(\frac{100}{P.O.}\right) }{\sqrt{\pi^2+\left[ \ln \left(  \frac{100}{P.O.}\right)\right]}}	\label{eq:zeta} \\
+\zeta &= 0.59 \approx 0.60 \nonumber
 \end{align}
-Using Eq.\eqref{eq:PM}, the desired Phase Margin ($PM_d$) the system should have in order to satisfy the $P.O.$ is defined as,
+Using Eq.\eqref{eq:PM}, the desired Phase Margin ($PM_d$) the system should have in order to satisfy the $PO$ is defined as,
 \begin{align*}
 PM_d = 100\times 0.6 = 60\degree
 \end{align*}
@@ -183,7 +183,7 @@ Finally, the gain $K$ can be obtained from the \textbf{gain condition}, where it
 & G(s)=\dfrac{97.96}{s(s+2.5)(s+27)} \nonumber
 \end{align}
 
-In Fig. \ref{fig:Q1_a}a it can be seen that the desired $PM_d = 60\degree$ is satisfied with the new gain, and step response has an $P.O. = 8.36$.
+In Fig. \ref{fig:Q1_a}a it can be seen that the desired $PM_d = 60\degree$ is satisfied with the new gain, and step response has an $PO = 8.36$.
 
 \begin{figure}[H]
 	\centering
@@ -219,6 +219,7 @@ margin(G);
 saveas(fig,'Q1_a_margin.png');
 fig = figure(2);
 step(feedback(G,1));
+stepinfo(feedback(G,1))
 saveas(fig,'Q1_a_stepp.png');
 \end{lstlisting}
 
@@ -230,7 +231,7 @@ Gc = \dfrac{s+z}{s+p} \label{eq:Gc_lead}
 \end{align}
 where the location of the zero is to the left of the pole, $|z|<|p|$.
 
-The design requirements are the velocity error constant $K_v\leq 25$, and the step response $P.O.\leq 10\%$
+The design requirements are the velocity error constant $K_v\leq 25$, and the step response $PO\leq 10\%$
 
 The first step is to calculate the loop gain that satisfies the $K_v$ is calculated as follows,
 \begin{align}
@@ -241,7 +242,7 @@ G(s) &= \dfrac{K_g}{s(s+a)(s+b)} \\
 G(s) &= \dfrac{1687}{s(s+2.5)(s+27)} \nonumber
 \end{align}
 
-Using the Eq.\eqref{PO}, Eq.\eqref{eq:zeta}, Eq.\eqref{eq:PM}, it is obtained that for an overshoot of $P.O.=10 \%$, the damping ratio is $\zeta = 0.6$, and the desired phase margin is $PM_d=60\degree$.
+Using the Eq.\eqref{PO}, Eq.\eqref{eq:zeta}, Eq.\eqref{eq:PM}, it is obtained that for an overshoot of $PO=10 \%$, the damping ratio is $\zeta = 0.6$, and the desired phase margin is $PM_d=60\degree$.
 
 In order to obtain the  $\omega_c$ that satisfies the gain condition with the new gain $K$, Eq.\eqref{eq:GainCondtion} is applied as follows,
 \begin{align}
@@ -335,13 +336,12 @@ K_v &= \lim\limits_{s\rightarrow 0} s~G(s) \\
 K_v &= \lim\limits_{s\rightarrow 0} s~ \left[\dfrac{s+z}{s+p} \quad \dfrac{K_{new}}{s(s+a)(s+b)} \right] \nonumber\\
 K_v &= 7.53 \nonumber
 \intertext{therefore,}
-ess_v &= 0.13 \nonumber\\
-\intertext{which is a relatively small steady-state error. }
+ess_v &= 0.13 \nonumber
 \end{align}
-
+which is a relatively small steady-state error.
 
 \subsection{Evaluation the performance of the compensated system}
-Fig. \ref{fig:Q1_lead} shows the Bode plot, unit step response, and the unit ramp response. It can be seen that the desired $PM_d=60\degree$ and the $P.O.=10\%$ is satisfied, and the system has an improved the settling time, $t_s=1.04$, see Table \ref{tab:lead}.
+Fig. \ref{fig:Q1_lead} shows the Bode plot, unit step response, and the unit ramp response. It can be seen that the desired $PM_d=60\degree$ and the $PO=10\%$ are satisfied, and the system has an improved the settling time, $t_s=1.04$, see Table \ref{tab:lead}.
 
 
 \begin{figure}[H]
@@ -400,10 +400,10 @@ omega_r = 4/(0.6*1.03) *sqrt(1-2*0.6^2);
 
 
 \subsection{Conclusion}
-Comparing the uncompensated system in Fig. \ref{fig:Q1_a}, and the Phase-Lead compensated system in Fig. \ref{fig:Q1_lead}, the desired phase margin $PM_d=60\degree$ and the overshoot $P.O.\leq10 \%$ were satisfied. Moreover, the settling time $t_s$ was improved three times in the Phase-lead compensated, which demonstrates this compensator improves the transient response without altering the desired phase margin.
+Comparing the uncompensated system in Fig. \ref{fig:Q1_a}, and the Phase-Lead compensated system in Fig. \ref{fig:Q1_lead}, the desired phase margin $PM_d=60\degree$ and the overshoot $PO\leq10 \%$ were satisfied. Moreover, the settling time $t_s$ was improved three times in the Phase-lead compensated, which demonstrates this compensator improves the transient response without altering the desired phase margin.
 
 \section{Question 2}
-The objective of this task is to design a Phase-Lead compensator, and a Phase-Lag compensator in series with a the first Phase-Lead compensator using two different approaches. 
+The objective of this task is to design a Phase-Lead compensator, and a Phase-Lag compensator in series with the first Phase-Lead compensator using two different approaches. 
 
 The plant to be studied is,
 \begin{align}
@@ -412,7 +412,7 @@ The plant to be studied is,
 \end{align} 
 
 \subsection{Determine the location of closed-loop dominant poles}
-The design requirements are the settling time $t_s\leq 2.9~ sec$, and the overshoot $P.O.\leq 20\%$. Although the plant is a fourth-order system, the compensator can be designed using the properties of a second-order system. 
+The design requirements are the settling time $t_s\leq 2.9~ sec$, and the overshoot $PO\leq 20\%$. Although the plant is a fourth-order system, the compensator can be designed using the properties of a second-order system. 
 
 The settling time is,
 \begin{align}
@@ -447,9 +447,9 @@ s1 = -omega_n*zeta+omega_n*sqrt(1-zeta^2)*1i;
 \end{lstlisting}
 
 \subsection{Demonstrate the desired poles do not belong to the root locus }
-In order to demonstrate that the desired dominant poles $r_{1,2}$ do not belong to the root locus of the plant $G(s)$, the angle condition must not be satisfied,
+In order to demonstrate that the desired dominant poles $r_{1,2}$ do not belong to the root locus of the plant $G(s)$, the angle condition must not be satisfied.
 
-Choosing on pole, $r_1=-1.38\pm j~2.73$, 
+Choosing the pole, $r_1=-1.38\pm j~2.73$, 
 \begin{align}
 &\measuredangle(G(r_1)) = -180\degree  \\
 &\measuredangle \left( \dfrac{K}{r_1^2(r_1+9)(r_1+50)} \right) = 180\degree \nonumber\\
@@ -560,7 +560,7 @@ G_{lead+prefilter} &= G_{pf}~ \dfrac{G_{ol}}{1+G_{ol}} \nonumber\\
 G_{lead+prefilter} &=  \dfrac{1}{s+1} ~\dfrac{10047~(s+1)}{(s+50)(s+13.07)(s+1.64)(s^2+2.76~s+9.40)}\nonumber
 \end{align}  
 
-Fig. \ref{fig:Q2_lead+prefilter} shows the result of implementing a Pre-filter, where the overshoot decreases dramatically with a small change in the settling time.
+Fig. \ref{fig:Q2_lead+prefilter} shows the result on implementing a Pre-filter, where the overshoot decreases dramatically with a small change in the settling time.
 \begin{figure}[H]
 	\centering
 	\subfigure[Step response.]{\includegraphics[width=0.52\linewidth]{../Q2_Lead+prefilter_step_a.png}}
@@ -745,7 +745,7 @@ Now, the new gain $K_{new}$ of the compensated system can be found using the gai
 which means that the gain has not changed.
 
 The following script in Matlab simulates the previous results.
-\begin{lstlisting}[language=tex, caption={}, label={}]
+\begin{lstlisting}[language=matlab, caption={}, label={}]
 %% New phase-lead compensator
 z_lead2 = x; % given zero lead right below the desired pole
 f = 180 + atand(y/(x-z_lead2))+(180-atand(y/(x-z_lag)))...
@@ -793,20 +793,20 @@ From Fig. \ref{fig:Q2_all_2}a it can be seen that the desired closed-loop poles 
 	\scalebox{1}{
 		\begin{tabular}{p{2.8cm}|p{1cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}}
 			\bf{Quantity}        & \bf{Lead} & \bf{Prefilter +Lead} & \bf{Lead +Lag} & \bf{Prefilter +Lead +Lag} & \bf{Lead\_2 +Lead +Lag} & \bf{Prefilter +Lead\_2 +Lead +Lag} \\ \hline
-			Rise Time            & 0.37      & 1.00                & 0.36          & 0.94                    & 0.37                 & 0.97                           \\ \hline
-			Settling Time        & 2.79      & 3.08                & 3.59          & 3.31                    & 2.87                 & 1.68                           \\ \hline
-			Percentage Overshoot & 51.46     & 0.07                & 57.96         & 1.79                    & 55.00                & 1.25                           \\ \hline
-			Phase Margin         & 40.80     & -180                & 36.60         & 36.60                   & 39.50                & -180                           \\ \hline
-			Gain Margin          & 8.96      & 7.07                & 8.51          & 8.51                    & 8.79                 & 6.79                           \\ \hline
-			Bandwidth            & 4.87      & 2.31                & 4.89          & 2.58                    & 4.88                 & 2.42                           \\ \hline
-			Peak Magnitude       & 1.51      & 1.00                & 1.58          & 1.02                    & 1.55                 & 1.01                           \\ \hline
+			Rise Time            & 0.37      & 1.00                 & 0.36           & 0.94                      & 0.37                    & 0.97                               \\ \hline
+			Settling Time        & 2.79      & 3.08                 & 3.59           & 3.31                      & 2.87                    & 1.68                               \\ \hline
+			Percentage Overshoot & 51.46     & 0.07                 & 57.96          & 1.79                      & 55.00                   & 1.25                               \\ \hline
+			Phase Margin         & 40.80     & -180                 & 36.60          & 36.60                     & 39.50                   & -180                               \\ \hline
+			Gain Margin          & 8.96      & 7.07                 & 8.51           & 8.51                      & 8.79                    & 6.79                               \\ \hline
+			Bandwidth            & 4.87      & 2.31                 & 4.89           & 2.58                      & 4.88                    & 2.42                               \\ \hline
+			Peak Magnitude       & 1.51      & 1.00                 & 1.58           & 1.02                      & 1.55                    & 1.01                               \\ \hline
 		\end{tabular} 		
 	}
 	\caption{Performance evaluation to unit step response}
 	\label{tab:Q2_all_2}
 \end{table}
 The following script in Matlab simulates the previous results.
-\begin{lstlisting}[language=tex, caption={}, label={}]
+\begin{lstlisting}[language=matlab, caption={}, label={}]
 %% Comparing the new compensator of the previous designs.
 fig = figure(9);
 rlocus(Gcl_lead2_lead_lag)
@@ -840,7 +840,7 @@ BW_lead2_lead_lag_prefilter = bandwidth(Gpf*Gcl_lead2_lead_lag); % bandwidth
 
 
 \subsection{Conclusion}
-The settling time requirement $t_s\leq2.9$ was satisfied by three of the six compensators, and only the last one with the Pre-filter achieved the desired overshoot $P.O.\leq 20 \%$. It is clear that the use of the Pre-filter reduces the overshoot drastically.  
+The settling time requirement $t_s\leq2.9$ was satisfied by three of the six compensators, and only the last one with the Pre-filter achieved the desired overshoot $PO\leq 20 \%$. It is clear that the use of the Pre-filter reduces the overshoot drastically.  
 
 
 
